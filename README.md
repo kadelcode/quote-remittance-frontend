@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Quote-Based Remittance System (Frontend)](#quote-based-remittance-system-frontend)
+  - [Overview](#overview)
+  - [Core User Flow](#core-user-flow)
+  - [Tech Stack](#tech-stack)
+  - [Project Structure](#project-structure)
+  - [Getting Started](#getting-started)
+    - [1. Clone the Repo](#1-clone-the-repo)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Run Development Server](#3-run-development-server)
+    - [4. Access App](#4-access-app)
+  - [Backend Integration](#backend-integration)
+    - [Requirements](#requirements)
+  - [API Configuration](#api-configuration)
+  - [Features (Planned / In Progress)](#features-planned--in-progress)
+    - [Quote Flow](#quote-flow)
+    - [Transaction Flow](#transaction-flow)
+    - [Tracking](#tracking)
+  - [Architecture Philosophy](#architecture-philosophy)
+  - [Known Considerations](#known-considerations)
+  - [Future Improvements](#future-improvements)
+  - [Author](#author)
+  - [Summary](#summary)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Quote-Based Remittance System (Frontend)
 
 ## Overview
