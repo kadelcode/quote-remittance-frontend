@@ -44,11 +44,11 @@ The frontend communicates with the backend API built using **Sprint Boot**
 ----
 
 ## Core User Flow
-```mermiad
+```mermaid
 graph LR
-  A[Requst Quote] --> B[Review Details]
-  B[Review Details] --> C[Confirm]
-  C[Confirm] --> D[Track Status]
+  A[Request Quote] --> B[Review Details];
+  B[Review Details] --> C[Confirm];
+  C[Confirm] --> D[Track Status];
 ```
 
 ---
@@ -161,7 +161,7 @@ export const api = axios.create({
 
 ## Architecture Philosophy
 This frontend follows a modular and scalable structure:
-```mermiad
+```mermaid
 graph LR
 A[UI];
 B[Hooks];
