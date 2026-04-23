@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
         <Route path="/" element={<h1>Home</h1>} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;

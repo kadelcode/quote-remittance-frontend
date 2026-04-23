@@ -1,6 +1,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
 - [Quote-Based Remittance System (Frontend)](#quote-based-remittance-system-frontend)
   - [Overview](#overview)
@@ -34,6 +35,7 @@
 This is the frontend application for the [Quote-Based Remittance System](https://github.com/kadelcode/quote-remittance-backend)
 
 It provides a user interface for:
+
 - Requesting exchange quotes
 - Viewing fees and rates
 - Initiating remittance transactions
@@ -41,9 +43,10 @@ It provides a user interface for:
 
 The frontend communicates with the backend API built using **Sprint Boot**
 
-----
+---
 
 ## Core User Flow
+
 ```mermaid
 graph LR
   A[Request Quote] --> B[Review Details];
@@ -54,6 +57,7 @@ graph LR
 ---
 
 ## Tech Stack
+
 - React (Vite)
 - TypeScript
 - Axios (API calls)
@@ -64,6 +68,7 @@ graph LR
 ---
 
 ## Project Structure
+
 ```
 src/
 │
@@ -82,10 +87,13 @@ src/
 ## Getting Started
 
 ### 1. Clone the Repo
+
 ```bash
 git clone https://github.com/kadelcode/quote-remittance-frontend.git
 ```
+
 then:
+
 ```bash
 cd quote-remittance-frontend
 ```
@@ -93,6 +101,7 @@ cd quote-remittance-frontend
 ---
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
@@ -100,6 +109,7 @@ npm install
 ---
 
 ### 3. Run Development Server
+
 ```
 npm run dev
 ```
@@ -107,6 +117,7 @@ npm run dev
 ---
 
 ### 4. Access App
+
 ```
 http://localhost:5173
 ```
@@ -114,7 +125,9 @@ http://localhost:5173
 ---
 
 ## Backend Integration
+
 The frontend connects to the backend API:
+
 ```
 http://localhost:8080
 ```
@@ -122,9 +135,11 @@ http://localhost:8080
 ---
 
 ### Requirements
+
 Make sure the backend is running before using the frontend.
 
 **Backend repo**
+
 ```
 quote-remittance-backend
 ```
@@ -132,7 +147,9 @@ quote-remittance-backend
 ---
 
 ## API Configuration
+
 Axios base URL:
+
 ```TypeScript
 // src/api/client.ts
 export const api = axios.create({
@@ -143,24 +160,30 @@ export const api = axios.create({
 ---
 
 ## Features (Planned / In Progress)
+
 ### Quote Flow
+
 - Request exchange quote
 - Display exchange rate and fees
 - Show expiry countdown
 
 ### Transaction Flow
+
 - Accept quote
 - Initiate payment
 - Confirm deposit
 
 ### Tracking
+
 - View remittance status
 - Display transaction progress
 
 ---
 
 ## Architecture Philosophy
+
 This frontend follows a modular and scalable structure:
+
 ```mermaid
 graph LR
 A[UI];
@@ -174,6 +197,7 @@ C --> D
 ```
 
 This ensures:
+
 - Separation of concerns
 - Reusability
 - Maintainability
@@ -181,6 +205,7 @@ This ensures:
 ---
 
 ## Known Considerations
+
 - CORS must be enabled on backend
 - Backend must be running for API calls
 - API errors are handled via React Query
@@ -188,6 +213,7 @@ This ensures:
 ---
 
 ## Future Improvements
+
 - Authentication (JWT)
 - Form validation (React Hook Form + Zod)
 - UI library (MUI / Tailwind)
@@ -197,13 +223,15 @@ This ensures:
 ---
 
 ## Author
+
 Built as part of a full-stack fintech system simulation project
 
 ---
 
 ## Summary
+
 This frontend:
+
 - Interacts with a real backend system
 - Simulates remittance workflows
 - Demonstrates modern React architecture
-
