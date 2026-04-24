@@ -1,4 +1,4 @@
-name: Link Check
+name: Lint & Format Check
 
 on:
   push:
