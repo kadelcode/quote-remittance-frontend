@@ -27,3 +27,15 @@ jobs:
 
       - name: Run Prettier check
         run: npm run format:check
+
+      - name: Validate commit messages
+        uses: wagoid/commitlint-github-action@v6
+
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|feature|fix|chore|refactor|docs|test|ci)/[0-9]+-[a-z0-9-]+$ ]]; then
+            echo "❌ Invalid branch name!"
+            exit 1
+          fi
