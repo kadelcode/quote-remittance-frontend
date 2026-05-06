@@ -1,4 +1,4 @@
-import { api } from "./client";
+import { api } from './client';
 
 export type User = {
   id: string;
@@ -6,6 +6,6 @@ export type User = {
 };
 
 export const getUsers = async (): Promise<User[]> => {
-  const res = await api.get<User[]>("/users");
+  const res = await api.get<User[]>('/users');
   return res.data;
 };
