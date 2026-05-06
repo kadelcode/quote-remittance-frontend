@@ -1,7 +1,11 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
+// Constants
+export const ACCESS_TOKEN_KEY = 'accessToken';
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
+// Axios Instance
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -9,13 +13,13 @@ export const api = axios.create({
   },
 });
 
-// Request interceptor
+// Request Interceptor (Attach Token)
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.set('Authorization', `Bearer ${token}`);
     }
 
     return config;
@@ -23,7 +27,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// Response interceptor
+// Response Interceptor (Handle Errors)
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError<unknown>) => {
@@ -35,9 +39,9 @@ api.interceptors.response.use(
     const { status } = error.response;
 
     if (status === 401) {
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
 
-      // optional: replace later with state-based logout
+      // NOTE: Replace later with state-based logout if using Redux/Zustand
       window.location.href = '/login';
 
       return Promise.reject(new Error('Unauthorized'));
