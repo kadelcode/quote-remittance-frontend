@@ -1,12 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
+import { setNavigator } from './utils/navigation';
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigator(navigate);
+  }, [navigate]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<h1>Home</h1>} />
+    </Routes>
   );
 }
 

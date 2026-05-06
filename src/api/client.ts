@@ -1,5 +1,7 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
+import { navigateTo } from '../utils/navigation';
+
 // Constants
 export const ACCESS_TOKEN_KEY = 'accessToken';
 
@@ -42,7 +44,7 @@ api.interceptors.response.use(
       localStorage.removeItem(ACCESS_TOKEN_KEY);
 
       // NOTE: Replace later with state-based logout if using Redux/Zustand
-      window.location.href = '/login';
+      navigateTo('/login');
 
       return Promise.reject(new Error('Unauthorized'));
     }
