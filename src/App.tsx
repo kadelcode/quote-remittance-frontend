@@ -1,8 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
+import { setNavigator } from './utils/navigation';
 
 import QuoteRequestForm from './components/QuoteRequestForm';
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigator(navigate);
+  }, [navigate]);
+
   return (
     <BrowserRouter>
       <Routes>
