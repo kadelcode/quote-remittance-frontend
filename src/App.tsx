@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import { setNavigator } from './utils/navigation';
-
 import QuoteRequestForm from './components/QuoteRequestForm';
+import { setNavigator } from './utils/navigation';
 
 function App() {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />,
+        <Route path="/" element={<h1>Home</h1>} />
         <Route path="/request-quote" element={<QuoteRequestForm />} />
       </Routes>
     </BrowserRouter>
