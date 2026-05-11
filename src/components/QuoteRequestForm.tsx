@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 interface FormData {
@@ -37,12 +38,16 @@ export default function QuoteRequestForm() {
         setErrorMessage(null);
         setQuoteResult(null);
         try {
-            const response = await fetch('http://localhost:8080/quotes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`
-                },
+            const token = localStorage.getItem('authToken');
+            const requestHeaders: Record<string, string> = {
+                'Content-Type': 'application/json'
+            };
+            if (token) {
+                requestHeaders['Authorization'] = `Bearer ${token}`;
+            }
+            const response = await fetch( `${import.meta.env.VITE_API_URL}/quotes`, {
+                method: 'POST', 
+                headers: requestHeaders,
                 body: JSON.stringify({
                     sendAmount: Number(formData.sendAmount),
                     fromCurrency: formData.fromCurrency,
@@ -67,7 +72,7 @@ export default function QuoteRequestForm() {
     };
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md border border-blue-200">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800                                                                                                                                                      ">Request a Quote</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Request a Quote</h2>
             <form onSubmit={handleGetQuote} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Send Amount</label>
@@ -110,7 +115,7 @@ export default function QuoteRequestForm() {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disable:bg-blue-300 transition-colors font-medium"
+                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors font-medium"
                 >
                     {isLoading ? 'Getting Quote...' : 'Get Quote'}
                 </button>
