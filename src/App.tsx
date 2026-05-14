@@ -7,7 +7,6 @@ import LandingPage from './pages/LandingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { setNavigator } from './utils/navigation';
 
-
 function App() {
   const navigate = useNavigate();
 
