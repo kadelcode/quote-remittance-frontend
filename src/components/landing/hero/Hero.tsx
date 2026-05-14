@@ -7,7 +7,7 @@ import Container from '@/components/common/Container';
 
 const Hero = () => {
   return (
-    <section className="overflow-hidden from-blue-50 to-white py-24">
+    <section className="bg-linear-to-b overflow-hidden from-blue-50 to-white py-24">
       <Container>
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}>
