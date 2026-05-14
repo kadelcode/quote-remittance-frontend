@@ -2,21 +2,7 @@ import TestimonialCard from './TestimonialCard';
 
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
-
-const testimonials = [
-  {
-    quote: 'Transparent rates and very fast transfers.',
-    name: 'Michael Johnson',
-  },
-  {
-    quote: 'The best remittance experience we have used.',
-    name: 'Sarah Williams',
-  },
-  {
-    quote: 'Secure, reliable, extremely fast and easy to use.',
-    name: 'David Lee',
-  },
-];
+import { TESTIMONIALS } from '@/constants/testimonials';
 
 const Testimonials = () => {
   return (
@@ -28,7 +14,7 @@ const Testimonials = () => {
         />
 
         <div className="grid gap-8 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
+          {TESTIMONIALS.map((testimonial) => (
             <TestimonialCard
               key={testimonial.name}
               quote={testimonial.quote}
