@@ -55,7 +55,7 @@ export default function QuoteRequestForm() {
       });
 
       if (!response.ok) {
-        throw new Error(`Server rejected request with status: ${response.status}`);
+        throw new Error('You need to sign in to request a quote. Please login and try again.');
       }
       const data: QuoteResponse = await response.json();
       setQuoteResult(data);
