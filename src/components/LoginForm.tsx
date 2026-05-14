@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 interface LoginCredentials {
-  email: '';
-  password: '';
+  email: string;
+  password: string;
 }
 
 interface FormErrors {
@@ -60,7 +60,7 @@ export default function LoginForm() {
     if (validateForm()) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth`, {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 px4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-900">Sign In to Your Account</h2>
         {globalError && (
@@ -93,7 +93,7 @@ export default function LoginForm() {
 
         <form noValidate onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-ls font-medium text-gray-800">Email</label>
+            <label className="block text-sm font-medium text-gray-800">Email</label>
             <input
               type="email"
               name="email"

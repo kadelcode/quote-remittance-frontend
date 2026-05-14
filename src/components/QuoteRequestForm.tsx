@@ -44,7 +44,7 @@ export default function QuoteRequestForm() {
       if (token) {
         requestHeaders['Authorization'] = `Bearer ${token}`;
       }
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/quotes`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/quotes`, {
         method: 'POST',
         headers: requestHeaders,
         body: JSON.stringify({
@@ -70,7 +70,7 @@ export default function QuoteRequestForm() {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 px4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md border border-blue-200">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Request a Quote</h2>
         <form onSubmit={handleGetQuote} className="space-y-4">
