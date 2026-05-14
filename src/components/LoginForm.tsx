@@ -1,0 +1,133 @@
+import { useState } from 'react';
+
+interface LoginCredentials {
+  email: '';
+  password: '';
+}
+
+interface FormErrors {
+  email?: string;
+  password?: string;
+}
+
+export default function LoginForm() {
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    email: '',
+    password: '',
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [globalError, setGlobalError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (fieldErrors[name as keyof FormErrors]) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    let isValid = true;
+
+    if (!credentials.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(credentials.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      isValid = false;
+    }
+
+    if (!credentials.password) {
+      newErrors.password = 'Password is required';
+      isValid = false;
+    }
+    setFieldErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setGlobalError(null);
+
+    if (validateForm()) {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        });
+
+        if (response.ok) {
+          //eslint-disable-next-line no-console
+          console.log('Login successful! Backend approved');
+        } else {
+          setGlobalError('Invalid email or password. Please try again');
+        }
+      } catch (error) {
+        console.error('The backend connection failed. Detail:', error);
+        setGlobalError('unable to connect to the server. Please check connection');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px4">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center text-gray-900">Sign In to Your Account</h2>
+        {globalError && (
+          <div className="p-3 text-sm text-red-700 bg-red-100 rounded">{globalError}</div>
+        )}
+
+        <form noValidate onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-ls font-medium text-gray-800">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${fieldErrors.email ? 'border-red-500' : 'border-gray-300'}`}
+              placeholder="you@example.com"
+            />
+            {fieldErrors.email && <p className="mt-1 text-sm text-red-500">{fieldErrors.email}</p>}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-800">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              className={`w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${fieldErrors.password ? 'border-red-500' : 'border-gray-300'}`}
+              placeholder="......."
+            />
+            {fieldErrors.password && (
+              <p className="mt-1 text-sm text-red-500">{fieldErrors.password}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
+          >
+            {isLoading ? 'Signing in...' : 'Sign In'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

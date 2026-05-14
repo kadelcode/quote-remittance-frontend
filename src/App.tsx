@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
+import LoginForm from './components/LoginForm';
 import QuoteRequestForm from './components/QuoteRequestForm';
 import LandingPage from './pages/LandingPage';
-import NotFoundPage from './pages/NotFoundPage';
 import { setNavigator } from './utils/navigation';
 
 function App() {
@@ -16,8 +16,17 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginForm />} />
       <Route path="/request-quote" element={<QuoteRequestForm />} />
-      <Route path="*" element={<NotFoundPage />} />
+      <Route
+        path="*"
+        element={
+          <div className="p-4 text-center">
+            <h2 className="text-2xl font-bold text-red-600">404 - Page Not Found</h2>
+            <p className="mt-2">The URL you requested does not exist in this application.</p>
+          </div>
+        }
+      />
     </Routes>
   );
 }
