@@ -32,9 +32,12 @@ const Hero = () => {
                 Get Started
               </Link>
 
-              <button className="rounded-2xl border border-slate-300 px-6 py-4 font-semibold">
+              <Link
+                to="/request-quote"
+                className="rounded-2xl border border-slate-300 px-6 py-4 font-semibold"
+              >
                 View Live Quotes
-              </button>
+              </Link>
             </div>
           </motion.div>
 
