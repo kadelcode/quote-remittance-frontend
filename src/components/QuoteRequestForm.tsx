@@ -1,4 +1,7 @@
+import { isAxiosError } from 'axios';
 import React, { useState } from 'react';
+
+import { api } from '../api/client';
 
 interface FormData {
   sendAmount: string | number;
@@ -37,38 +40,40 @@ export default function QuoteRequestForm() {
     setErrorMessage(null);
     setQuoteResult(null);
     try {
-      const token = localStorage.getItem('authToken');
-      const requestHeaders: Record<string, string> = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        requestHeaders['Authorization'] = `Bearer ${token}`;
-      }
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/quotes`, {
-        method: 'POST',
-        headers: requestHeaders,
-        body: JSON.stringify({
-          sendAmount: Number(formData.sendAmount),
-          fromCurrency: formData.fromCurrency,
-          toCurrency: formData.toCurrency,
-        }),
+      const response = await api.post('/quotes', {
+        sendAmount: Number(formData.sendAmount),
+        fromCurrency: formData.fromCurrency,
+        toCurrency: formData.toCurrency,
       });
 
-      if (!response.ok) {
-        throw new Error('You need to sign in to request a quote. Please login and try again.');
-      }
-      const data: QuoteResponse = await response.json();
-      setQuoteResult(data);
+      setQuoteResult(response.data);
     } catch (error) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
+      if (isAxiosError(error)) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          setErrorMessage('Your session has expired. Please login again');
+        } else if (error.response?.status === 400) {
+          setErrorMessage('Invalid quote data. Please check your inputs');
+        } else {
+          setErrorMessage('Server error. Please try agan later');
+        }
+      } else if (error instanceof Error) {
+        if (error.message === 'Unauthorized') {
+          setErrorMessage(
+            'You need to sign in to request a quote. Please login and try again.',
+          );
+        } else {
+          console.error('Submission failed:', error.message);
+          setErrorMessage('Unable to process request. Please check connection');
+        }
       } else {
-        setErrorMessage('An unexpected error occurred. The server is unreachable');
+        console.error('An unkown error occured:', error);
+        setErrorMessage('An unexpected error occured. The server is unreachable.');
       }
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md border border-blue-200">

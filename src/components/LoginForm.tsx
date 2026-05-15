@@ -1,4 +1,7 @@
+import { isAxiosError } from 'axios';
 import { useState } from 'react';
+
+import { api, ACCESS_TOKEN_KEY } from '../api/client';
 
 interface LoginCredentials {
   email: string;
@@ -59,24 +62,38 @@ export default function LoginForm() {
 
     if (validateForm()) {
       setIsLoading(true);
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(credentials),
-        });
 
-        if (response.ok) {
-          //eslint-disable-next-line no-console
-          console.log('Login successful! Backend approved');
-        } else {
-          setGlobalError('Invalid email or password. Please try again');
+      try {
+        const response = await api.post('/auth', credentials);
+
+        if (response.status === 200) {
+          const token = response.data.token;
+
+          if (token) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, token);
+          }
+          // eslint-disable-next-line no-console
+          console.log('Login successful! Token secured.');
+          // navigateTo('/dashboard);
         }
       } catch (error) {
-        console.error('The backend connection failed. Detail:', error);
-        setGlobalError('unable to connect to the server. Please check connection');
+        if (isAxiosError(error)) {
+          if (error.response?.status === 403 || error.response?.status === 401) {
+            setGlobalError('Invalid email or password. Please try again');
+          } else {
+            setGlobalError('Unable to connect to the server. Please check your connection.');
+          }
+        } else if (error instanceof Error) {
+          if (error.message === 'Unauthorized') {
+            setGlobalError('Invalid email or password. Please try again');
+          } else {
+            console.error('Login failed:', error.message);
+            setGlobalError('Unable to connect to th server. Please check your connection.');
+          }
+        } else {
+          console.error('An unkown error occured:', error);
+          setGlobalError('Unable to connect to the server. Please check your connection');
+        }
       } finally {
         setIsLoading(false);
       }
