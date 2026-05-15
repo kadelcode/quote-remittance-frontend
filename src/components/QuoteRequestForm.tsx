@@ -58,9 +58,7 @@ export default function QuoteRequestForm() {
         }
       } else if (error instanceof Error) {
         if (error.message === 'Unauthorized') {
-          setErrorMessage(
-            'You need to sign in to request a quote. Please login and try again.',
-          );
+          setErrorMessage('You need to sign in to request a quote. Please login and try again.');
         } else {
           console.error('Submission failed:', error.message);
           setErrorMessage('Unable to process request. Please check connection');
