@@ -26,7 +26,7 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Link to="#" className="hidden text-slate-700 md:block">
+            <Link to="/login" className="hidden text-slate-700 md:block">
               Login
             </Link>
 

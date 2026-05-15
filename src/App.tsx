@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
+import LoginForm from './components/LoginForm';
 import QuoteRequestForm from './components/QuoteRequestForm';
 import LandingPage from './pages/LandingPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -16,6 +17,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginForm />} />
       <Route path="/request-quote" element={<QuoteRequestForm />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
