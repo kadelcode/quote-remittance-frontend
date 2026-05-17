@@ -30,7 +30,7 @@ export default function RegisterForm() {
     confirmPassword: '',
   });
 
-  const [fieldErrors, setFielErrors] = useState<FormErrors>({});
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -70,8 +70,8 @@ export default function RegisterForm() {
       newErrors.password = 'Password is required';
       isValid = false;
     } else {
-      const strongPasswordRegrex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
-      if (!strongPasswordRegrex.test(formData.password)) {
+      const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+      if (!strongPasswordRegex.test(formData.password)) {
         newErrors.password =
           'Password must be 8+ character with at least 1 uppercase, 1 number and 1 symbol (!@#$%^&*)';
         isValid = false;
@@ -81,7 +81,7 @@ export default function RegisterForm() {
       newErrors.confirmPassword = 'Passwords do not match';
       isValid = false;
     }
-    setFielErrors(newErrors);
+    setFieldErrors(newErrors);
     return isValid;
   };
 
@@ -110,7 +110,7 @@ export default function RegisterForm() {
       } catch (error) {
         if (isAxiosError(error)) {
           if (error.response?.status === 409) {
-            setGlobalError('An account with this email already exits.');
+            setGlobalError('An account with this email already exists.');
           } else if (error.response?.status === 400) {
             setGlobalError('Invalid registration data provided.');
           } else {
